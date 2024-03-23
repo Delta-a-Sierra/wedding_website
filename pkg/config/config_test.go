@@ -36,6 +36,19 @@ func TestHandler_LoadConfig(t *testing.T) {
 			}(),
 			expectedError: nil,
 		},
+		"loading presentationmethod from file returns correct values": {
+			getHandler: func() (*config.Handler, error) {
+				return config.NewHandler(config.WithConfig(config.HandlerConfig{
+					Filepath: "./test_files/presentationMethod.yml",
+				}))
+			},
+			expected: func() config.Config {
+				config := config.GetDefaultConfig()
+				config.PresentationMethod = "htmx"
+				return config
+			}(),
+			expectedError: nil,
+		},
 	}
 
 	for name, tc := range tests {
