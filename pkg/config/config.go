@@ -9,20 +9,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Config struct {
-	Log Log
-}
-
-type Log struct {
-	OutputFile string
-	Level      string
-}
-
 var defaults = Config{
 	Log: Log{
 		OutputFile: "",
 		Level:      "",
 	},
+	PresentationMethod: "htmx",
 }
 
 func GetDefaultConfig() Config {
