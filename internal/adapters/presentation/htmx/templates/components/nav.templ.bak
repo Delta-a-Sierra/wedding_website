@@ -1,0 +1,22 @@
+package components
+
+templ Nav() {
+	<header class="bg-white w-full py-3 px-10">
+		<nav class="flex w-full h-full items-center justify-between">
+			<div class="w-10 h-10 mr-auto">
+				@Logo()
+			</div>
+			<h5 class="px-4 font-italiana text-xl flex-1">Damilola & Dwayne</h5>
+			<ul class="flex gap-4 ml-auto">
+				@navLink("Home", "#")
+				@navLink("Wedding", "#")
+				@navLink("Registry", "#")
+				@navLink("RSVP", "#")
+			</ul>
+		</nav>
+	</header>
+}
+
+templ navLink(text string, _ string) {
+	<li class="text-sm"><a href="#">{ text }</a> </li>
+}

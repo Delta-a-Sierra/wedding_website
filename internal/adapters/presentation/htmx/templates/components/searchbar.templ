@@ -1,0 +1,23 @@
+package components
+
+templ SearchBar() {
+	<label class="flex border rounded-s px-4 py-2 gap-x-8 lg:gap-x-4 w-full" for="registry-search">
+		<div class="w-10 h-10 lg:w-6 lg:h-6">
+			<svg viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M26.984 27.0106L35.875 35.875M30.75 17.9375C30.75 25.0136 25.0136 30.75 17.9375 30.75C10.8613 30.75 5.125 25.0136 5.125 17.9375C5.125 10.8613 10.8613 5.125 17.9375 5.125C25.0136 5.125 30.75 10.8613 30.75 17.9375Z"
+					stroke="#A7A096"
+					stroke-width="5.33333"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				></path>
+			</svg>
+		</div>
+		<input
+			class="outline-none placeholder-off-grey text-grey-txt text-3xl lg:text-lg"
+			name="registry-search"
+			type="text"
+			placeholder="Search for items"
+		/>
+	</label>
+}

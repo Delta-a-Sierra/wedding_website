@@ -1,0 +1,15 @@
+with-expecter: true
+inpackage: true
+filename: "mock_{{.InterfaceName}}.go"
+dir: "{{.InterfaceDir}}"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "{{.PackageName}}"
+packages:
+  github.com/Delta-a-Sierra/wedding_website/internal/domain:
+    # place your package-specific config here
+    config:
+    interfaces:
+      # select the interfaces you want mocked
+      WeddingInfoRepo:
+        # Modify package-level config for this specific interface (if applicable)
+        config:

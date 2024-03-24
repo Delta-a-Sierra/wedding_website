@@ -1,0 +1,30 @@
+package sections
+
+import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/components"
+
+templ Footer() {
+	<footer class="bg-off-grey py-20 lg:py-8 text-center flex flex-col justify-around items-center">
+		<div class="px-20 lg:px-0 lg:w-2/6 flex flex-col gap-8 lg:gap-2 justify-center items-center">
+			<div class="w-20 h-20 lg:w-10 lg:h-10">
+				@components.Logo()
+			</div>
+			<h3 class="font-italiana text-6xl lg:text-2xl pt-4">Damilola & Dwayne</h3>
+			<p class="text-grey-txt text-3xl leading-relaxed lg:text-sm lg:leading-6">
+				Thank you for visiting our wedding website! We are thrilled to share this special day with you. Your love and
+				support mean the world to us.
+				As we embark on this beautiful journey together, your presence in our lives fills us with immense joy and
+				gratitude. Your support has been a guiding light as we prepare to say 'I do' and embark on our new life together.
+			</p>
+			<ul class="mt-8 text-gray-700 font-light flex  gap-4 justify-between items-center lg:w-2/4 w-3/4">
+				@footerLink("Home", "#")
+				@footerLink("Wedding", "#")
+				@footerLink("Registry", "#")
+				@footerLink("RSVP", "#")
+			</ul>
+		</div>
+	</footer>
+}
+
+templ footerLink(text string, link templ.SafeURL) {
+	<li class="text-3xl hover:text-white lg:hover:text-xl transition ease-in-out"><a href={ link }>{ text }</a></li>
+}

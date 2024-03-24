@@ -1,0 +1,39 @@
+package components
+
+templ Nav() {
+<header class="flex flex-col items-center bg-white w-full lg:py-3">
+  <nav class="flex w-full h-full py-10 px-10 lg:py-0 items-center justify-between">
+    <div class="w-20 h-20 lg:w-10 lg:h-10">
+      @Logo()
+    </div>
+    <h5 class="px-4 font-italiana justify-self-end text-4xl lg:text-xl lg:flex-1">Damilola & Dwayne</h5>
+    <div class="w-16 h-16 flex lg:hidden">
+      @icons("menu")
+    </div>
+    <ul class="hidden lg:flex gap-4 ml-auto text-sm">
+      @navLink("Home", "#")
+      @navLink("Wedding", "#")
+      @navLink("Registry", "#")
+      @navLink("RSVP", "#")
+    </ul>
+  </nav>
+  <div class="w-4/5">
+    // @navAside()
+  </div>
+</header>
+}
+
+templ navLink(text string, link templ.SafeURL) {
+<li class=""><a href={ link }>{ text }</a> </li>
+}
+
+templ navAside() {
+<div>
+  <ul class="flex flex-col items-center py-8 font-light z-10 shadow-2xl lg:hidden gap-16 ml-auto bg-white text-4xl">
+    @navLink("Home", "#")
+    @navLink("Wedding", "#")
+    @navLink("Registry", "#")
+    @navLink("RSVP", "#")
+  </ul>
+</div>
+}
