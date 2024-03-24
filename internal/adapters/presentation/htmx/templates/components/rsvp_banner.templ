@@ -1,0 +1,30 @@
+package components
+
+templ RSVPBanner() {
+	<form class="w-full bg-primary py-8 flex justify-center">
+		<div class="w-full px-10 py-20 lg:px-16 flex gap-8 lg:justify-center items-center">
+			<h3 class="font-italiana text-5xl lg:text-3xl leading-normal text-white w-2/4 lg:w-fit self-start">
+				Join us in celebrating love! RSVP today.
+			</h3>
+			<div class="flex flex-col flex-1 lg:flex-grow-0 lg:flex-row gap-y-8 gap-x-4 text-3xl lg:text-lg">
+				@Input("name", "text", "person", "please enter name")
+				@Input("email", "email", "email", "please enter email")
+				<button class="bg-off-grey text-white py-2 px-8 rounded-sm w-fit">Submit</button>
+			</div>
+		</div>
+	</form>
+}
+
+templ Input(name, inputType, iconType, placeholder string) {
+	<label class="flex border bg-white rounded-s px-4 py-2 gap-x-4 w-full" for={ name }>
+		<div class="w-10 h-10 lg:w-6 lg:h-6">
+			@icons(iconType)
+		</div>
+		<input
+			class="bg-transparent outline-none placeholder-off-grey"
+			name={ name }
+			type={ inputType }
+			placeholder={ placeholder }
+		/>
+	</label>
+}

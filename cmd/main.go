@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 
+	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/infastructure/repositories"
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx"
+	"github.com/Delta-a-Sierra/wedding_website/internal/domain/app"
 	"github.com/Delta-a-Sierra/wedding_website/pkg/config"
 )
 
@@ -16,7 +18,9 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("configHandler.LoadConfig: %w", err))
 	}
+	repo := repositories.NewInMemoryRepo()
+	app := app.NewApp(repo)
 	if conf.PresentationMethod == config.HTMXPM {
-		htmx.Start()
+		htmx.Start(app)
 	}
 }

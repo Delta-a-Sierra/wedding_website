@@ -1,0 +1,25 @@
+package components
+
+import "fmt"
+import "github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
+
+templ Countdown(countdown entities.Countdown) {
+	<div
+		id="countdown"
+		hx-swap="outerHTML"
+		class="flex gap-x-8 items-center justify-center"
+		hx-get="/countdown"
+		hx-trigger="every 30s"
+	>
+		@counter("Days", countdown.Days)
+		@counter("Hours", countdown.Hours)
+		@counter("Minutes", countdown.Minutes)
+	</div>
+}
+
+templ counter(name string, count int) {
+	<div class="flex-col font-light text-grey-txt flex items-center justify-center">
+		<h3 class="text-5xl lg:text-3xl">{ fmt.Sprintf("%02d",count) } </h3>
+		<p class="text-3xl lg:text-xl">{ name }</p>
+	</div>
+}
