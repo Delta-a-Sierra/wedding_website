@@ -78,15 +78,70 @@ func (_c *MockWeddingInfoRepo_GetWeddingDate_Call) RunAndReturn(run func(context
 	return _c
 }
 
+// GetWeddingLocation provides a mock function with given fields: _a0
+func (_m *MockWeddingInfoRepo) GetWeddingLocation(_a0 context.Context) (string, error) {
+	ret := _m.Called(_a0)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetWeddingLocation")
+	}
+
+	var r0 string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context) (string, error)); ok {
+		return rf(_a0)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context) string); ok {
+		r0 = rf(_a0)
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockWeddingInfoRepo_GetWeddingLocation_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetWeddingLocation'
+type MockWeddingInfoRepo_GetWeddingLocation_Call struct {
+	*mock.Call
+}
+
+// GetWeddingLocation is a helper method to define mock.On call
+//   - _a0 context.Context
+func (_e *MockWeddingInfoRepo_Expecter) GetWeddingLocation(_a0 interface{}) *MockWeddingInfoRepo_GetWeddingLocation_Call {
+	return &MockWeddingInfoRepo_GetWeddingLocation_Call{Call: _e.mock.On("GetWeddingLocation", _a0)}
+}
+
+func (_c *MockWeddingInfoRepo_GetWeddingLocation_Call) Run(run func(_a0 context.Context)) *MockWeddingInfoRepo_GetWeddingLocation_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context))
+	})
+	return _c
+}
+
+func (_c *MockWeddingInfoRepo_GetWeddingLocation_Call) Return(_a0 string, _a1 error) *MockWeddingInfoRepo_GetWeddingLocation_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockWeddingInfoRepo_GetWeddingLocation_Call) RunAndReturn(run func(context.Context) (string, error)) *MockWeddingInfoRepo_GetWeddingLocation_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // NewMockWeddingInfoRepo creates a new instance of MockWeddingInfoRepo. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewMockWeddingInfoRepo(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockWeddingInfoRepo {
+}) *MockWeddingInfoRepo {
 	mock := &MockWeddingInfoRepo{}
-	mock.Test(t)
+	mock.Mock.Test(t)
 
 	t.Cleanup(func() { mock.AssertExpectations(t) })
 

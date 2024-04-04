@@ -18,7 +18,9 @@
 # vendor/
 
 # Go workspace file
+.env
 go.work
 config.yml
 *_templ.go
+*_templ.txt
 tmp/
