@@ -138,5 +138,12 @@ func (i *InMemory) GetGuestByEmail(ctx context.Context, email string) (entities.
 
 func (i *InMemory) RSVP(ctx context.Context, guest entities.Guest) error {
 	guest.Attending = true
-	return nil
+	for j, g := range i.guestList {
+		if g.ID != guest.ID {
+			continue
+		}
+		i.guestList[j] = guest
+		return nil
+	}
+	return domain.ErrGuestNotFound
 }
