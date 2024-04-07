@@ -4,7 +4,7 @@ import "github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/components"
 
 templ Registry(items []entities.RegistryItem) {
-	<section class="py-20 px-10">
+	<section id="registry" class="py-20 px-10">
 		<div class="flex flex-col gap-12 lg:gap-4 items-center">
 			<h3 class="text-center text-5xl lg:text-2xl font-light text-off-grey font-italiana">Regisitry</h3>
 			<h2 class="text-center font-italiana text-6xl lg:text-4xl">Too Our Happy Ever After</h2>
@@ -16,15 +16,19 @@ templ Registry(items []entities.RegistryItem) {
 			<div class="w-3/4 lg:w-1/4">
 				@components.SearchBar()
 			</div>
-		</div>
-		<div class="px-10 lg:px-64 py-12 flex justify-center items-center">
-			<div class="grid grid-cols-2 lg:grid-cols-6 gap-4">
-				for _,item := range items {
-					@registryItem(item)
-				}
-			</div>
+			@RegistryItems(items)
 		</div>
 	</section>
+}
+
+templ RegistryItems(items []entities.RegistryItem) {
+	<div id="registry-items" class="px-10 lg:px-64 py-12 flex justify-center items-center">
+		<div class="grid grid-cols-2 lg:grid-cols-6 gap-4">
+			for _,item := range items {
+				@registryItem(item)
+			}
+		</div>
+	</div>
 }
 
 templ registryItem(item entities.RegistryItem) {

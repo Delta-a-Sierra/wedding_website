@@ -14,4 +14,5 @@ type RegistryRepo interface {
 	AddRegistryItem(context.Context, entities.RegistryItem) error
 	EditRegistryItem(context.Context, entities.RegistryItem) error
 	DeleteRegistryItem(context.Context, uuid.UUID) error
+	SearchRegistry(string) ([]entities.RegistryItem, error)
 }

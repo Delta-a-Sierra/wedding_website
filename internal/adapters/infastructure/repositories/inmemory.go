@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/Delta-a-Sierra/wedding_website/internal/domain"
@@ -26,11 +27,11 @@ func NewInMemoryRepo() *InMemory {
 		},
 		registryItems: []entities.RegistryItem{
 			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
 		},
 	}
 }
@@ -151,4 +152,14 @@ func (i *InMemory) RSVP(ctx context.Context, guest entities.Guest) error {
 		return nil
 	}
 	return domain.ErrGuestNotFound
+}
+
+func (i *InMemory) SearchRegistry(searchString string) ([]entities.RegistryItem, error) {
+	var items []entities.RegistryItem
+	for _, item := range i.registryItems {
+		if strings.Contains(strings.ToLower(item.Name), strings.ToLower(searchString)) {
+			items = append(items, item)
+		}
+	}
+	return items, nil
 }

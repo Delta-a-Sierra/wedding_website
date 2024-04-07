@@ -40,6 +40,7 @@ func Start(app *app.App) {
 	r.Get("/countdown", handlers.NewGetCountdownHandler(app).ServeHTTP)
 	// r.Post("/guests", handlers.NewRSVPHandler(app).ServeHTTP)
 	r.Post("/rsvp", handlers.NewRSVPHandler(app).ServeHTTP)
+	r.Post("/registry/search", handlers.NewGetRegistryHandler(app).ServeHTTP)
 	r.Get("/admin/guests", handlers.NewGetGuestsHandler(app).ServeHTTP)
 	log.Fatal(http.ListenAndServe(":3000", r))
 }
