@@ -38,5 +38,8 @@ func Start(app *app.App) {
 		layout.Base("wedding_website", pages.Home(countdown, items)).Render(r.Context(), w)
 	})
 	r.Get("/countdown", handlers.NewGetCountdownHandler(app).ServeHTTP)
+	// r.Post("/guests", handlers.NewRSVPHandler(app).ServeHTTP)
+	r.Post("/rsvp", handlers.NewRSVPHandler(app).ServeHTTP)
+	r.Get("/admin/guests", handlers.NewGetGuestsHandler(app).ServeHTTP)
 	log.Fatal(http.ListenAndServe(":3000", r))
 }

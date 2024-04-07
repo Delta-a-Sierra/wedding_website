@@ -7,10 +7,10 @@ import (
 	"github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 )
 
-func (a *App) GetGuestList(ctx context.Context, guest entities.Guest) ([]entities.Guest, error) {
+func (a *App) GetGuestList(ctx context.Context) ([]entities.Guest, error) {
 	guests, err := a.repo.GetGuestList(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("a.repo.RSVP: %w", err)
+		return nil, fmt.Errorf("a.repo.GetGuestList: %w", err)
 	}
 	return guests, nil
 }

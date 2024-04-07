@@ -112,10 +112,14 @@ func (i *InMemory) GetGuestList(context.Context) ([]entities.Guest, error) {
 	return i.guestList, nil
 }
 
-func (i *InMemory) AddGuest(ctx context.Context, guest entities.Guest) error {
+func (i *InMemory) AddGuest(ctx context.Context, guest entities.Guest) (entities.Guest, error) {
+	g, err := i.GetGuestByEmail(ctx, guest.Email)
+	if err == nil {
+		return g, nil
+	}
 	guest.ID = uuid.New()
 	i.guestList = append(i.guestList, guest)
-	return nil
+	return guest, nil
 }
 
 func (i *InMemory) GetGuestByID(ctx context.Context, ID uuid.UUID) (entities.Guest, error) {
@@ -137,12 +141,13 @@ func (i *InMemory) GetGuestByEmail(ctx context.Context, email string) (entities.
 }
 
 func (i *InMemory) RSVP(ctx context.Context, guest entities.Guest) error {
-	guest.Attending = true
 	for j, g := range i.guestList {
 		if g.ID != guest.ID {
 			continue
 		}
-		i.guestList[j] = guest
+		g.Attending = true
+		fmt.Println("Attending")
+		i.guestList[j] = g
 		return nil
 	}
 	return domain.ErrGuestNotFound

@@ -6,7 +6,7 @@ import (
 
 type Guest struct {
 	ID        uuid.UUID
-	name      string
+	Name      string
 	Email     string
 	Attending bool
 }
