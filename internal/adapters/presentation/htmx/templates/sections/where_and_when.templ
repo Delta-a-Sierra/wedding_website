@@ -3,30 +3,25 @@ package sections
 import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/components"
 
 templ WhereAndWhen() {
-	<div class="py-40 lg:py-20 flex flex-col justify-center items-center gap-20 lg:gap-10">
-		<div class="flex flex-col gap-y-4 lg:gap-y-2">
-			<h3 class="text-center text-6xl lg:text-4xl font-italiana">Where and When</h3>
-			<p class="text-4xl lg:text-2xl font-light text-grey-txt">Save the date we can’t wait to celebrate with you</p>
-		</div>
-		<div class="flex flex-col gap-10 lg:gap-4 items-center w-full lg:w-full">
-			<div
-				class="flex flex-col lg:flex-row px-10 gap-y-6  gap-x-8 lg:w-4/6 font-light text-3xl lg:text-lg items-center lg:justify-center"
-			>
-				@components.IconText("calendar", "Saturday, May 4th 2024")
-				@components.IconText("location", "15 Bedford Rd, Clapham High St, London SW4 7SH")
-				@components.IconText("time", "3:00 pm til 7:00 pm")
-			</div>
-			<div class="w-full">
-				<gmp-map
-					class="w-full h-200 lg:h-80"
-					center="51.46487808227539,-0.1291225701570511"
-					zoom="19"
-					map-id="DEMO_MAP_ID"
-				>
-					<gmp-advanced-marker position="51.46487808227539,-0.1291225701570511" title="My location"></gmp-advanced-marker>
-				</gmp-map>
-				@components.RSVPBanner()
-			</div>
-		</div>
-	</div>
+<div id="where-when" class="py-40 lg:py-20 flex flex-col justify-center items-center gap-20 lg:gap-10">
+  <div class="flex flex-col gap-y-4 lg:gap-y-2">
+    <h3 class="text-center text-6xl lg:text-4xl font-italiana">Where and When</h3>
+    <p class="text-4xl lg:text-2xl font-light text-grey-txt">Save the date we can’t wait to celebrate with you</p>
+  </div>
+  <div class="flex flex-col gap-10 lg:gap-4 items-center w-full lg:w-full">
+    <div
+      class="flex flex-col lg:flex-row px-10 gap-y-6  gap-x-8 lg:w-4/6 font-light text-3xl lg:text-lg items-center lg:justify-center">
+      @components.IconText("calendar", "Saturday, May 4th 2024")
+      @components.IconText("location", "15 Bedford Rd, Clapham High St, London SW4 7SH")
+      @components.IconText("time", "3:00 pm til 7:00 pm")
+    </div>
+    <div id="rsvp-banner" class="w-full">
+      <gmp-map class="w-full h-200 lg:h-80" center="51.46487808227539,-0.1291225701570511" zoom="19"
+        map-id="DEMO_MAP_ID">
+        <gmp-advanced-marker position="51.46487808227539,-0.1291225701570511" title="My location"></gmp-advanced-marker>
+      </gmp-map>
+      @components.RSVPBanner()
+    </div>
+  </div>
+</div>
 }

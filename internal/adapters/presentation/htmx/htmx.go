@@ -37,10 +37,15 @@ func Start(app *app.App) {
 		}
 		layout.Base("wedding_website", pages.Home(countdown, items)).Render(r.Context(), w)
 	})
+	registryHandlers := handlers.NewGetRegistryHandler(app)
 	r.Get("/countdown", handlers.NewGetCountdownHandler(app).ServeHTTP)
-	// r.Post("/guests", handlers.NewRSVPHandler(app).ServeHTTP)
 	r.Post("/rsvp", handlers.NewRSVPHandler(app).ServeHTTP)
-	r.Post("/registry/search", handlers.NewGetRegistryHandler(app).ServeHTTP)
+	r.Post("/registry/search", registryHandlers.SearchAll)
+	r.Post("/registry/search/not-purchased", registryHandlers.SearchNotPurchased)
+	r.Post("/registry/search/not-purchased", registryHandlers.SearchNotPurchased)
+	r.Get("/registry/all", registryHandlers.FilterAll)
+	r.Get("/registry/not-purchased", registryHandlers.FilterNotPurchased)
+	r.Post("/registry/purchased/{id}", handlers.NewGetRegistryItemPurchasedHandler(app).ServeHTTP)
 	r.Get("/admin/guests", handlers.NewGetGuestsHandler(app).ServeHTTP)
 	log.Fatal(http.ListenAndServe(":3000", r))
 }

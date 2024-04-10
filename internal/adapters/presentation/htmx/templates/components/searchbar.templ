@@ -1,7 +1,7 @@
 package components
 
-templ SearchBar() {
-<label class="flex border rounded-s px-4 py-2 gap-x-8 lg:gap-x-4 w-full" for="registry-search">
+templ SearchBar(postString string) {
+<label id="registry-searchbar" class="flex border rounded-s px-4 py-2 gap-x-8 lg:gap-x-4 w-full" for="registry-search">
   <div class="w-10 h-10 lg:w-6 lg:h-6">
     <svg viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -10,7 +10,7 @@ templ SearchBar() {
     </svg>
   </div>
   <input class="outline-none placeholder-off-grey text-grey-txt text-3xl lg:text-lg" name="registry-search"
-    type="search" placeholder="Search for items" hx-post="/registry/search"
-    hx-trigger="input changed delay:500ms, search" hx-target="#registry-items" hx-indicator=".htmx-indicator" />
+    type="search" hx-post={ postString } placeholder="Search for items" hx-trigger="input changed delay:500ms, search"
+    hx-target="#registry-item-grid" hx-swap="outerHTML" hx-indicator=".htmx-indicator" />
 </label>
 }

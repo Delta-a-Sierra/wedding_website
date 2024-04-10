@@ -26,12 +26,12 @@ func NewInMemoryRepo() *InMemory {
 			Location: "15 bedford road, clapham, london, sw8 2hz",
 		},
 		registryItems: []entities.RegistryItem{
-			{Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
 		},
 	}
 }
@@ -50,6 +50,17 @@ func (i *InMemory) GetWeddingInfo(context.Context) (entities.WeddingInfo, error)
 
 func (i *InMemory) GetRegistryItems(context.Context) ([]entities.RegistryItem, error) {
 	return i.registryItems, nil
+}
+
+func (i *InMemory) GetRegistryItemsNotPurchased(context.Context) ([]entities.RegistryItem, error) {
+	var items []entities.RegistryItem
+	for _, item := range i.registryItems {
+		if item.Purchased {
+			continue
+		}
+		items = append(items, item)
+	}
+	return items, nil
 }
 
 func (i *InMemory) GetRegistryItem(ctx context.Context, id uuid.UUID) (entities.RegistryItem, error) {
@@ -161,5 +172,20 @@ func (i *InMemory) SearchRegistry(searchString string) ([]entities.RegistryItem,
 			items = append(items, item)
 		}
 	}
+	fmt.Println("items", items)
+	return items, nil
+}
+
+func (i *InMemory) SearchRegistryNotPurchased(searchString string) ([]entities.RegistryItem, error) {
+	var items []entities.RegistryItem
+	for _, item := range i.registryItems {
+		if item.Purchased {
+			continue
+		}
+		if strings.Contains(strings.ToLower(item.Name), strings.ToLower(searchString)) {
+			items = append(items, item)
+		}
+	}
+	fmt.Println("items", items)
 	return items, nil
 }
