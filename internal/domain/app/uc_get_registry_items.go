@@ -24,18 +24,18 @@ func (a App) GetRegistryItemsNotPurchased(ctx context.Context) ([]entities.Regis
 	return items, nil
 }
 
-func (a App) GetRegistryItemsPage(ctx context.Context, count, offset int, filter func(entities.RegistryItem) bool) ([]entities.RegistryItem, error) {
-	items, err := a.repo.GetRegistryItemsPage(ctx, count, offset, filter)
+func (a App) GetRegistryItemsPageAll(ctx context.Context, count, offset int) ([]entities.RegistryItem, error) {
+	items, err := a.repo.GetRegistryItemsPageAll(ctx, count, offset)
 	if err != nil {
 		return nil, fmt.Errorf("a.repo.GetRegistryItemsPage: %w", err)
 	}
 	return items, nil
 }
 
-func (a App) GetRegistryItemsFiltered(ctx context.Context, filter func(entities.RegistryItem) bool) ([]entities.RegistryItem, error) {
-	items, err := a.repo.GetRegistryItemsFiltered(ctx, filter)
+func (a App) GetRegistryItemsPageNotPurchased(ctx context.Context, count, offset int) ([]entities.RegistryItem, error) {
+	items, err := a.repo.GetRegistryItemsPageNotPurchased(ctx, count, offset)
 	if err != nil {
-		return nil, fmt.Errorf("a.repo.GetRegistryItemsFiltered: %w", err)
+		return nil, fmt.Errorf("a.repo.GetRegistryItemsPage: %w", err)
 	}
 	return items, nil
 }
@@ -52,8 +52,8 @@ func (a App) GetPageCount(ctx context.Context) (int, error) {
 	return count, nil
 }
 
-func (a App) GetPageCountFiltered(ctx context.Context, filter func(entities.RegistryItem) bool) (int, error) {
-	i, err := a.GetRegistryItemsFiltered(ctx, filter)
+func (a App) GetPageCountNotPurchased(ctx context.Context) (int, error) {
+	i, err := a.GetRegistryItemsNotPurchased(ctx)
 	if err != nil {
 		return 0, fmt.Errorf("a.GetRegistryItemsFiltered: %w", err)
 	}

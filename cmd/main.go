@@ -23,7 +23,10 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("configHandler.LoadConfig: %w", err))
 	}
-	repo := repositories.NewInMemoryRepo()
+	repo := repositories.NewPostgresRepo()
+	if err := repo.Connect(); err != nil {
+		log.Fatalf("repo.Connect: %s", err.Error())
+	}
 	app := app.NewApp(repo)
 	if conf.PresentationMethod == config.HTMXPM {
 		htmx.Start(app)

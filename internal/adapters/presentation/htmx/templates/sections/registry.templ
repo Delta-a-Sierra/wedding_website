@@ -84,18 +84,20 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
 }
 
 templ RegistryItemGrid(items []entities.RegistryItem, pages int, page int, urlPrefix string) {
-	if len(items) == 0 {
-		<div id="registry-item-grid" class="flex py-40 justify-center items-center">
-			<h3 class="text-4xl text-center">No Registry Items</h3>
-		</div>
-	} else {
-		<div id="registry-item-grid" class="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
-			for _,item := range items {
-				@RegistryItem(item)
-			}
-		</div>
-		@components.Pagination(urlPrefix, pages, page)
-	}
+	<div id="registry-content">
+		if len(items) == 0 {
+			<div id="registry-item-grid" class="flex py-40 justify-center items-center">
+				<h3 class="text-4xl text-center">No Registry Items</h3>
+			</div>
+		} else {
+			<div id="registry-item-grid" class="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+				for _,item := range items {
+					@RegistryItem(item)
+				}
+			</div>
+			@components.Pagination(urlPrefix, pages, page)
+		}
+	</div>
 }
 
 templ RegistryItem(item entities.RegistryItem) {

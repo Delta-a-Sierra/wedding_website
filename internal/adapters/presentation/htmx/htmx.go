@@ -9,7 +9,6 @@ import (
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/layout"
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/pages"
 	"github.com/Delta-a-Sierra/wedding_website/internal/domain/app"
-	"github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -35,9 +34,7 @@ func Start(app *app.App) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		items, err := app.GetRegistryItemsPage(r.Context(), 6, 1, func(item entities.RegistryItem) bool {
-			return true
-		})
+		items, err := app.GetRegistryItemsPageAll(r.Context(), 6, 1)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}

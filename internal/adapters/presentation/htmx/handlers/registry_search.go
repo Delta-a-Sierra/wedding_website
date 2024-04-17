@@ -34,15 +34,12 @@ func (h *GetRegistryHandler) GetRegistryPageFilteredAll(w http.ResponseWriter, r
 		http.Error(w, "page is 0", http.StatusInternalServerError)
 		return
 	}
-	filter := func(item entities.RegistryItem) bool {
-		return true
-	}
-	pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+	pages, err := h.app.GetPageCount(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	items, err := h.app.GetRegistryItemsPage(r.Context(), 6, i, filter)
+	items, err := h.app.GetRegistryItemsPageAll(r.Context(), 6, i)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -66,16 +63,13 @@ func (h *GetRegistryHandler) GetRegistryPageFilteredNotPurchased(w http.Response
 		http.Error(w, "page is 0", http.StatusInternalServerError)
 		return
 	}
-	filter := func(item entities.RegistryItem) bool {
-		return !item.Purchased
-	}
 
-	pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+	pages, err := h.app.GetPageCountNotPurchased(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	items, err := h.app.GetRegistryItemsPage(r.Context(), 6, i, filter)
+	items, err := h.app.GetRegistryItemsPageNotPurchased(r.Context(), 6, i)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -93,19 +87,21 @@ func (h *GetRegistryHandler) SearchAll(w http.ResponseWriter, r *http.Request) {
 	var items []entities.RegistryItem
 	var err error
 	if searchString == "" {
-		items, err = h.app.GetRegistryItems(r.Context())
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
 		pages, err := h.app.GetPageCount(r.Context())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		sections.RegistryItems(items, true, pages, 1).Render(r.Context(), w)
+		items, err = h.app.GetRegistryItemsPageAll(r.Context(), 6, 1)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+		fmt.Println(items)
+
+		sections.RegistryItemGrid(items, pages, 1, "/registry/all/page").Render(r.Context(), w)
 		return
 	}
 	items, err = h.app.SearchRegistry(r.Context(), searchString)
@@ -114,21 +110,13 @@ func (h *GetRegistryHandler) SearchAll(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-	filter := func(item entities.RegistryItem) bool {
-		for _, i := range items {
-			if item.ID == i.ID {
-				return true
-			}
-		}
-		return false
-	}
 
-	pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+	pages, err := h.app.GetPageCount(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	sections.RegistryItems(items, true, pages, 1).Render(r.Context(), w)
+	sections.RegistryItemGrid(items, pages, 1, "/registry/all/page").Render(r.Context(), w)
 }
 
 func (h *GetRegistryHandler) SearchNotPurchased(w http.ResponseWriter, r *http.Request) {
@@ -143,21 +131,13 @@ func (h *GetRegistryHandler) SearchNotPurchased(w http.ResponseWriter, r *http.R
 			w.Write([]byte(err.Error()))
 			return
 		}
-		filter := func(item entities.RegistryItem) bool {
-			for _, i := range items {
-				if item.ID == i.ID {
-					return true
-				}
-			}
-			return false
-		}
 
-		pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+		pages, err := h.app.GetPageCountNotPurchased(r.Context())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		sections.RegistryItems(items, false, pages, 1).Render(r.Context(), w)
+		sections.RegistryItemGrid(items, pages, 1, "/registry/not-purchased/page").Render(r.Context(), w)
 		return
 	}
 	items, err = h.app.SearchRegistryNotPurchased(r.Context(), searchString)
@@ -166,21 +146,13 @@ func (h *GetRegistryHandler) SearchNotPurchased(w http.ResponseWriter, r *http.R
 		w.Write([]byte(err.Error()))
 		return
 	}
-	filter := func(item entities.RegistryItem) bool {
-		for _, i := range items {
-			if item.ID == i.ID {
-				return true
-			}
-		}
-		return false
-	}
 
-	pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+	pages, err := h.app.GetPageCountNotPurchased(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	sections.RegistryItems(items, false, pages, 1).Render(r.Context(), w)
+	sections.RegistryItemGrid(items, pages, 1, "/registry/not-purchased/page").Render(r.Context(), w)
 }
 
 func (h *GetRegistryHandler) FilterAll(w http.ResponseWriter, r *http.Request) {
@@ -204,16 +176,8 @@ func (h *GetRegistryHandler) FilterNotPurchased(w http.ResponseWriter, r *http.R
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	filter := func(item entities.RegistryItem) bool {
-		for _, i := range items {
-			if item.ID == i.ID {
-				return true
-			}
-		}
-		return false
-	}
 
-	pages, err := h.app.GetPageCountFiltered(r.Context(), filter)
+	pages, err := h.app.GetPageCountNotPurchased(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
