@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -26,12 +27,18 @@ func NewInMemoryRepo() *InMemory {
 			Location: "15 bedford road, clapham, london, sw8 2hz",
 		},
 		registryItems: []entities.RegistryItem{
-			{ID: uuid.New(), Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{ID: uuid.New(), Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{ID: uuid.New(), Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{ID: uuid.New(), Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{ID: uuid.New(), Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-			{ID: uuid.New(), Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "1 Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "2 Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "3 Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "4 Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "5 Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "6 Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "7 Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "8 Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "9 Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "10 Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "11 Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+			{ID: uuid.New(), Name: "12 Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
 		},
 	}
 }
@@ -50,6 +57,47 @@ func (i *InMemory) GetWeddingInfo(context.Context) (entities.WeddingInfo, error)
 
 func (i *InMemory) GetRegistryItems(context.Context) ([]entities.RegistryItem, error) {
 	return i.registryItems, nil
+}
+
+func (i *InMemory) GetRegistryItemsFiltered(_ context.Context, filter func(entities.RegistryItem) bool) ([]entities.RegistryItem, error) {
+	var items []entities.RegistryItem
+	for _, item := range i.registryItems {
+		if !filter(item) {
+			continue
+		}
+		items = append(items, item)
+	}
+	return items, nil
+}
+
+func (i *InMemory) GetRegistryItemsPage(_ context.Context, count, offset int, filter func(entities.RegistryItem) bool) ([]entities.RegistryItem, error) {
+	var items []entities.RegistryItem
+	var added int
+	var end int
+	start := count * (offset - 1)
+	if len(i.registryItems)-1 < start {
+		return nil, errors.New("offset out of range")
+	}
+
+	fmt.Println("start", start)
+	fmt.Println("start item", i.registryItems[start])
+	for i, item := range i.registryItems[start:] {
+		if added >= count {
+			fmt.Println("item", item.Name)
+			end = i
+			break
+		} else {
+			fmt.Println("i", i)
+		}
+		if !filter(item) {
+			continue
+		}
+		items = append(items, item)
+		added++
+	}
+	fmt.Println("end", start+6)
+	fmt.Println("end item", i.registryItems[start+end])
+	return items, nil
 }
 
 func (i *InMemory) GetRegistryItemsNotPurchased(context.Context) ([]entities.RegistryItem, error) {

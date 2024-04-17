@@ -9,6 +9,7 @@ import (
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/layout"
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/pages"
 	"github.com/Delta-a-Sierra/wedding_website/internal/domain/app"
+	"github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -30,20 +31,26 @@ func Start(app *app.App) {
 		}
 		countdown.ZeroOutMinusValues()
 
-		items, err := app.GetRegistryItems(r.Context())
+		p, err := app.GetPageCount(r.Context())
 		if err != nil {
-			fmt.Fprintf(w, "err: %s", err.Error())
-			return
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		layout.Base("wedding_website", pages.Home(countdown, items)).Render(r.Context(), w)
+		items, err := app.GetRegistryItemsPage(r.Context(), 6, 1, func(item entities.RegistryItem) bool {
+			return true
+		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		layout.Base("wedding_website", pages.Home(countdown, items, p, 1)).Render(r.Context(), w)
 	})
 	registryHandlers := handlers.NewGetRegistryHandler(app)
 	r.Get("/countdown", handlers.NewGetCountdownHandler(app).ServeHTTP)
 	r.Post("/rsvp", handlers.NewRSVPHandler(app).ServeHTTP)
 	r.Post("/registry/search", registryHandlers.SearchAll)
 	r.Post("/registry/search/not-purchased", registryHandlers.SearchNotPurchased)
-	r.Post("/registry/search/not-purchased", registryHandlers.SearchNotPurchased)
 	r.Get("/registry/all", registryHandlers.FilterAll)
+	r.Get("/registry/all/page/{page}", registryHandlers.GetRegistryPageFilteredAll)
+	r.Get("/registry/not-purchased/page/{page}", registryHandlers.GetRegistryPageFilteredNotPurchased)
 	r.Get("/registry/not-purchased", registryHandlers.FilterNotPurchased)
 	r.Post("/registry/purchased/{id}", handlers.NewGetRegistryItemPurchasedHandler(app).ServeHTTP)
 	r.Get("/admin/guests", handlers.NewGetGuestsHandler(app).ServeHTTP)

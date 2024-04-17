@@ -1,12 +1,14 @@
 module github.com/Delta-a-Sierra/wedding_website
 
-go 1.21.0
+go 1.22.2
 
 require (
 	github.com/a-h/templ v0.2.639
 	github.com/fatih/structs v1.1.0
 	github.com/go-chi/chi v1.5.5
 	github.com/google/uuid v1.4.0
+	github.com/joho/godotenv v1.5.1
+	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
 )

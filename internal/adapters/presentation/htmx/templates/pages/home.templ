@@ -5,14 +5,14 @@ import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation
 import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/sections"
 import "github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 
-templ Home(countdown entities.Countdown, items []entities.RegistryItem) {
-<div class="flex flex-col h-full">
-  <div class="sticky">
-    @components.Nav()
-  </div>
-  @sections.Hero(countdown)
-</div>
-@sections.WhereAndWhen()
-@sections.Registry(items)
-@sections.Footer()
+templ Home(countdown entities.Countdown, items []entities.RegistryItem, pages int, page int) {
+	<div class="flex flex-col h-full">
+		<div class="sticky">
+			@components.Nav()
+		</div>
+		@sections.Hero(countdown)
+	</div>
+	@sections.WhereAndWhen()
+	@sections.Registry(items, pages, page)
+	@sections.Footer()
 }

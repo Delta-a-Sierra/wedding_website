@@ -9,6 +9,8 @@ import (
 
 type RegistryRepo interface {
 	GetRegistryItems(context.Context) ([]entities.RegistryItem, error)
+	GetRegistryItemsPage(context.Context, int, int, func(entities.RegistryItem) bool) ([]entities.RegistryItem, error)
+	GetRegistryItemsFiltered(context.Context, func(entities.RegistryItem) bool) ([]entities.RegistryItem, error)
 	GetRegistryItemsNotPurchased(context.Context) ([]entities.RegistryItem, error)
 	GetRegistryItem(context.Context, uuid.UUID) (entities.RegistryItem, error)
 	DeclareRegistryItemPurchase(context.Context, uuid.UUID, uuid.UUID) error
