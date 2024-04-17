@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
@@ -185,8 +186,9 @@ func (p *Postgress) DeleteRegistryItem(context.Context, uuid.UUID) error {
 }
 
 func (p *Postgress) SearchRegistry(searchString string) ([]entities.RegistryItem, error) {
-	query := `SELECT id, name, description, link, purchased FROM items WHERE name LIKE LOWER('%k%') ORDER BY name;`
-	rows, err := p.db.QueryContext(context.TODO(), query)
+	fmt.Println("searchString", searchString, ".")
+	query := `SELECT id, name, description, link, purchased FROM items WHERE LOWER(name) LIKE '%' || $1 || '%' ORDER BY name;`
+	rows, err := p.db.QueryContext(context.TODO(), query, strings.ToLower(searchString))
 	if err != nil {
 		return nil, fmt.Errorf("p.db.QueryContext: %w", err)
 	}
