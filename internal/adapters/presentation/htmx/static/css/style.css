@@ -681,6 +681,10 @@ video {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -805,22 +809,17 @@ video {
 
 .bg-primary {
   --tw-bg-opacity: 1;
-  background-color: rgb(177 178 144 / var(--tw-bg-opacity));
-}
-
-.bg-sky-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
-}
-
-.bg-slate-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+  background-color: rgb(53 94 59 / var(--tw-bg-opacity));
 }
 
 .bg-slate-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.bg-slate-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
 .bg-transparent {
@@ -830,6 +829,23 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-slate-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.bg-\[url\(\'\/static\/images\/DSC9045_edited\.png\'\)\] {
+  background-image: url('/static/images/DSC9045_edited.png');
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
 }
 
 .p-2 {
@@ -843,6 +859,11 @@ video {
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .px-20 {
@@ -885,6 +906,11 @@ video {
   padding-bottom: 10rem;
 }
 
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -908,6 +934,10 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-80 {
+  padding-top: 20rem;
 }
 
 .text-center {
@@ -973,6 +1003,15 @@ video {
   line-height: 1.625;
 }
 
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -995,7 +1034,7 @@ video {
 
 .text-primary {
   --tw-text-opacity: 1;
-  color: rgb(177 178 144 / var(--tw-text-opacity));
+  color: rgb(53 94 59 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -1011,6 +1050,10 @@ video {
 .placeholder-off-grey::placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(167 160 150 / var(--tw-placeholder-opacity));
+}
+
+.bg-blend-overlay {
+  background-blend-mode: overlay;
 }
 
 .shadow-2xl {
@@ -1042,7 +1085,7 @@ gmp-map {
 
 .hover\:bg-primary:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(177 178 144 / var(--tw-bg-opacity));
+  background-color: rgb(53 94 59 / var(--tw-bg-opacity));
 }
 
 .hover\:text-white:hover {

@@ -79,18 +79,18 @@ func (p *Postgress) seed() error {
 		return fmt.Errorf("p.db.Exec: %w", err)
 	}
 	registryItems := []entities.RegistryItem{
-		{ID: uuid.New(), Name: "1 Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "2 Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "3 Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "4 Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "5 Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "6 Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "7 Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "8 Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "9 Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "10 Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "11 Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
-		{ID: uuid.New(), Name: "12 Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Le Creuset Cast Iron Signature Square Skillet", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Towels", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Toaster", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Kettle", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Dyson Hoover", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
+		{ID: uuid.New(), Name: "Herman Miller Office Chair", Description: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim"},
 	}
 	for _, item := range registryItems {
 		query := "INSERT INTO items (name, description, link)VALUES ($1, $2, $3);"

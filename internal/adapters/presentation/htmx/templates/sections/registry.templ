@@ -32,7 +32,7 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
   }
   if all {
   <div class="flex mb-8 gap-4 text-2xl text-grey-txt">
-    <button id="registry-filter-all" class="rounded p-4 border-grey-txt border bg-sky-600 text-white" hx-trigger="click"
+    <button id="registry-filter-all" class="rounded p-4 border-grey-txt border bg-primary text-white" hx-trigger="click"
       hx-target="#registry-items" hx-swap="outerHTML" hx-get={ fmt.Sprintf("/registry/all/page/%d", 1) }>All</button>
     <button id="registry-filter-not_purchased" class="rounded p-4 border-grey-txt border" hx-trigger="click"
       hx-target="#registry-items" hx-swap="outerHTML" hx-get={ fmt.Sprintf("/registry/not-purchased/page/%d", 1) }>
@@ -44,7 +44,7 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
   <div class="flex mb-8 gap-4 text-2xl text-grey-txt">
     <button id="registry-filter-all" class="rounded p-4 border-grey-txt border" hx-trigger="click"
       hx-target="#registry-items" hx-swap="outerHTML" hx-get={ fmt.Sprintf("/registry/all/page/%d", 1) }>All</button>
-    <button id="registry-filter-not_purchased" class="rounded p-4 border-grey-txt border bg-sky-600 text-white"
+    <button id="registry-filter-not_purchased" class="rounded p-4 border-grey-txt border bg-primary text-white"
       hx-trigger="click" hx-target="#registry-items" hx-swap="outerHTML" hx-get={
       fmt.Sprintf("/registry/not-purchased/page/%d", 1) }>
       Not
@@ -88,20 +88,31 @@ templ RegistryItem(item entities.RegistryItem) {
   </div>
   <div class="flex gap-2 justify-center h-14 items-center">
     <div
-      class="flex-1 justify-center flex-col flex bg-slate-800 h-full hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light">
+      class="flex-1 justify-center flex-col flex bg-off-grey h-full hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light">
       <a target="_blank" href="#">
         View Items
       </a>
     </div>
     if !item.Purchased {
-    <div class="flex flex-col justify-center p-2 h-full w-14 bg-slate-800 rounded" hx-trigger="click"
-      hx-post={ "/registry/purchased/" + item.ID.String() } hx-swap="outerHTML" hx-target={
-      fmt.Sprintf("#registry-item-%s", item.ID.String()) } onClick="Swal.fire({title: 'Confirm Purchase', text:'Do you want to confirm you have purchased this item'}).then(function(result){
-            if(result.isConfirmed){
-              htmx.trigger(this, 'confirmed');  
-            } 
-        })"
-      class="p-2 flex-1 bg-slate-800 hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light">
+    <div class="flex flex-col justify-center p-2 h-full w-14 bg-off-grey hover:bg-primary rounded"
+      hx-post={ "/registry/purchased/" + item.ID.String() } hx-trigger="confirmed" hx-swap="outerHTML" hx-target={
+      fmt.Sprintf("#registry-item-%s", item.ID.String()) } onClick=" Swal.fire({
+  title: 'Confirm Purchase',
+  text: 'Are you sure you would like to confirm this item as purchased',
+  showCancelButton: true,
+  confirmButtonText: 'Confirm',
+  confirmButtonColor: '#355e3b',
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    htmx.trigger(this, 'confirmed');
+    Swal.fire({
+      title: 'Confirmed',
+      confirmButtonColor: '#355e3b',
+      icon: 'success'
+    });
+  }
+})" class="p-2 flex-1 bg-slate-800 hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_68_190)">
           <path
