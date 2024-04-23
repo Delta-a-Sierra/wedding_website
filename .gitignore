@@ -24,3 +24,15 @@ config.yml
 *_templ.go
 *_templ.txt
 tmp/
+
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+!aws_s3_state_bucket/terraform.tfstate
+
+# .tfvars files
+*.tfvars
+aws_iot/files/lambdas/alert_slack/build/*
