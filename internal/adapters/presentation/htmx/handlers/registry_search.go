@@ -99,7 +99,6 @@ func (h *GetRegistryHandler) SearchAll(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(err.Error()))
 			return
 		}
-		fmt.Println(items)
 
 		sections.RegistryItemGrid(items, pages, 1, "/registry/all/page").Render(r.Context(), w)
 		return
@@ -125,7 +124,7 @@ func (h *GetRegistryHandler) SearchNotPurchased(w http.ResponseWriter, r *http.R
 	var items []entities.RegistryItem
 	var err error
 	if searchString == "" {
-		items, err = h.app.GetRegistryItemsNotPurchased(r.Context())
+		items, err = h.app.GetRegistryItemsPageNotPurchased(r.Context(), 6, 1)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
