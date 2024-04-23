@@ -96,14 +96,13 @@ templ RegistryItem(item entities.RegistryItem) {
     if !item.Purchased {
     <div class="flex flex-col justify-center p-2 h-full w-14 bg-off-grey hover:bg-primary rounded"
       hx-post={ "/registry/purchased/" + item.ID.String() } hx-trigger="confirmed" hx-swap="outerHTML" hx-target={
-      fmt.Sprintf("#registry-item-%s", item.ID.String()) } onClick=" Swal.fire({
+      fmt.Sprintf("#registry-item-%s", item.ID.String()) } onClick="Swal.fire({
   title: 'Confirm Purchase',
   text: 'Are you sure you would like to confirm this item as purchased',
   showCancelButton: true,
   confirmButtonText: 'Confirm',
   confirmButtonColor: '#355e3b',
 }).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
   if (result.isConfirmed) {
     htmx.trigger(this, 'confirmed');
     Swal.fire({
