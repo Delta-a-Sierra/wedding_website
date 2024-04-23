@@ -95,9 +95,12 @@ templ RegistryItem(item entities.RegistryItem) {
     </div>
     if !item.Purchased {
     <div class="flex flex-col justify-center p-2 h-full w-14 bg-slate-800 rounded" hx-trigger="click"
-      hx-post={ "/registry/purchased/" + item.ID.String() } hx-swap="outerHTML"
-      hx-confirm="are you sure you wish to register this item as purchased" hx-target={ fmt.Sprintf("#registry-item-%s",
-      item.ID.String()) }
+      hx-post={ "/registry/purchased/" + item.ID.String() } hx-swap="outerHTML" hx-target={
+      fmt.Sprintf("#registry-item-%s", item.ID.String()) } onClick="Swal.fire({title: 'Confirm Purchase', text:'Do you want to confirm you have purchased this item'}).then(function(result){
+            if(result.isConfirmed){
+              htmx.trigger(this, 'confirmed');  
+            } 
+        })"
       class="p-2 flex-1 bg-slate-800 hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_68_190)">
