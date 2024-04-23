@@ -186,7 +186,6 @@ func (p *Postgress) DeleteRegistryItem(context.Context, uuid.UUID) error {
 }
 
 func (p *Postgress) SearchRegistry(searchString string) ([]entities.RegistryItem, error) {
-	fmt.Println("searchString", searchString, ".")
 	query := `SELECT id, name, description, link, purchased FROM items WHERE LOWER(name) LIKE '%' || $1 || '%' ORDER BY name;`
 	rows, err := p.db.QueryContext(context.TODO(), query, strings.ToLower(searchString))
 	if err != nil {
@@ -200,7 +199,16 @@ func (p *Postgress) SearchRegistry(searchString string) ([]entities.RegistryItem
 }
 
 func (p *Postgress) SearchRegistryNotPurchased(searchString string) ([]entities.RegistryItem, error) {
-	return p.SearchRegistry(searchString)
+	query := `SELECT id, name, description, link, purchased FROM items WHERE purchased = FALSE  AND LOWER(name) LIKE '%' || $1 || '%' ORDER BY name;`
+	rows, err := p.db.QueryContext(context.TODO(), query, strings.ToLower(searchString))
+	if err != nil {
+		return nil, fmt.Errorf("p.db.QueryContext: %w", err)
+	}
+	items, err := parseRowsToItems(rows)
+	if err != nil {
+		return nil, fmt.Errorf("parseRowsToItems: %w", err)
+	}
+	return items, nil
 }
 
 func (p *Postgress) AddGuest(ctx context.Context, guest entities.Guest) (entities.Guest, error) {
