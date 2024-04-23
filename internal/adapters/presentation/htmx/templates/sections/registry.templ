@@ -20,7 +20,7 @@ templ Registry(items []entities.RegistryItem, pages int, page int) {
 }
 
 templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int) {
-	<div id="registry-items" class="px-10 lg:px-64 py-8 gap-4 flex flex-col justify-center items-center">
+	<div id="registry-items" class="w-full px-10 lg:px-50 py-8 gap-4 flex flex-col justify-center items-center">
 		if all {
 			<div class="w-3/4 lg:w-1/4">
 				@components.SearchBar("/registry/search")
@@ -31,18 +31,19 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
 			</div>
 		}
 		if all {
-			<div class="flex mb-8 gap-4 text-2xl text-grey-txt">
+			<div class="flex mb-8 gap-4 lg:gap-2 text-2xl lg:text-sm text-grey-txt">
 				<button
 					id="registry-filter-all"
-					class="rounded p-4 border-grey-txt border bg-primary text-white"
+					class="rounded p-4 lg:p-1 border-gray-300 border bg-primary text-white"
 					hx-trigger="click"
 					hx-target="#registry-items"
 					hx-swap="outerHTML"
-					hx-get={ fmt.Sprintf("/registry/all/page/%d", 1) }
+					hx-get={ fmt.Sprintf("/registry/all/page/%d",
+      1) }
 				>All</button>
 				<button
 					id="registry-filter-not_purchased"
-					class="rounded p-4 border-grey-txt border"
+					class="rounded p-4 lg:p-1 border-gray-300 border"
 					hx-trigger="click"
 					hx-target="#registry-items"
 					hx-swap="outerHTML"
@@ -53,10 +54,10 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
 				</button>
 			</div>
 		} else {
-			<div class="flex mb-8 gap-4 text-2xl text-grey-txt">
+			<div class="flex mb-8 gap-4 lg:gap-2 text-2xl lg:text-sm text-grey-txt">
 				<button
 					id="registry-filter-all"
-					class="rounded p-4 border-grey-txt border"
+					class="rounded p-4 lg:p-1 border-gray-300 border"
 					hx-trigger="click"
 					hx-target="#registry-items"
 					hx-swap="outerHTML"
@@ -64,7 +65,7 @@ templ RegistryItems(items []entities.RegistryItem, all bool, pages int, page int
 				>All</button>
 				<button
 					id="registry-filter-not_purchased"
-					class="rounded p-4 border-grey-txt border bg-primary text-white"
+					class="rounded p-4 lg:p-1 border-gray-300 border bg-primary text-white"
 					hx-trigger="click"
 					hx-target="#registry-items"
 					hx-swap="outerHTML"
@@ -101,15 +102,20 @@ templ RegistryItemGrid(items []entities.RegistryItem, pages int, page int, urlPr
 }
 
 templ RegistryItem(item entities.RegistryItem) {
-	<div id={ "registry-item-" + item.ID.String() } class="flex-col flex px-6 lg:px-4 pt-8 pb-4  border rounded gap-4">
+	<div
+		id={ "registry-item-" + item.ID.String() }
+		class="flex-col w-full flex px-6 lg:px-4  pt-8 lg:pt-2 pb-4 border rounded gap-4"
+	>
 		if item.Purchased {
-			<p class="text-primary text-3xl text-end">purchased</p>
+			<p class="text-primary text-3xl lg:text-sm text-end">purchased</p>
+		} else {
+			<p class="invisible text-primary text-3xl lg:text-sm text-end">purchased</p>
 		}
 		<div class="flex flex-col pb-8 gap-4 h-full flex-1">
 			<h3 class="font-light text-center text-4xl lg:text-lg">{ item.Name }</h3>
 			<p class="font-light flex-1 text-grey-txt text-2xl leading-relaxed lg:text-xs">{ item.Description }</p>
 		</div>
-		<div class="flex gap-2 justify-center h-14 items-center">
+		<div class="flex gap-2 justify-center h-14 lg:h-8 items-center">
 			<div
 				class="flex-1 justify-center flex-col flex bg-off-grey h-full hover:bg-primary rounded text-white text-2xl lg:text-sm text-center font-light"
 			>

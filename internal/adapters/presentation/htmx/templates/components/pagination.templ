@@ -3,54 +3,77 @@ package components
 import "fmt"
 
 templ Pagination(urlPrefix string, pageCount int, page int) {
-<div id="pagination" class="flex justify-center items-center">
-  if pageCount > 1 {
-  <div class="flex gap-3 justify-center items-center w-screen">
-    <div if page>1 {
-      hx-target="#registry-items"
-      hx-swap="outerHTML"
-      hx-get={ fmt.Sprintf("%s/%d", urlPrefix,
+	<div id="pagination" class="flex justify-center items-center">
+		if pageCount > 1 {
+			<div class="flex gap-3 justify-center items-center w-screen">
+				<div
+					if page>1 {
+						hx-target="#registry-items"
+						hx-swap="outerHTML"
+						hx-get={ fmt.Sprintf("%s/%d", urlPrefix,
       page-1) }
-      }
-      class="bg-gray-200 text-gray-500 p-2 w-12 h-12 flex justify-center items-center "
-      >
-      <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.436 407.436" xml:space="preserve"
-        transform="matrix(-1, 0, 0, 1, 0, 0)">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-        <g id="SVGRepo_iconCarrier">
-          <polygon points="112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 ">
-          </polygon>
-        </g>
-      </svg>
-    </div>
-    @pages(urlPrefix, pageCount, page)
-    <div if page<pageCount { hx-get={ fmt.Sprintf("%s/%d", urlPrefix, page+1) } hx-target="#registry-items"
-      hx-swap="outerHTML" } class="bg-gray-200 text-gray-500 p-2 w-12 h-12 flex justify-center items-center ">
-      <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.436 407.436" xml:space="preserve">
-        <polygon points="112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 ">
-        </polygon>
-      </svg>
-    </div>
-  </div>
-  }
-</div>
+					}
+					class="bg-gray-200 text-gray-500 p-2 lg:p-1 w-12 h-12 lg:w-7 lg:h-7 flex justify-center items-center "
+				>
+					<svg
+						fill="#000000"
+						version="1.1"
+						id="Layer_1"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						viewBox="0 0 407.436 407.436"
+						xml:space="preserve"
+						transform="matrix(-1, 0, 0, 1, 0, 0)"
+					>
+						<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+						<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+						<g id="SVGRepo_iconCarrier">
+							<polygon points="112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 "></polygon>
+						</g>
+					</svg>
+				</div>
+				@pages(urlPrefix, pageCount, page)
+				<div
+					if page<pageCount {
+						hx-get={ fmt.Sprintf("%s/%d", urlPrefix, page+1) }
+						hx-target="#registry-items"
+						hx-swap="outerHTML"
+					}
+					class="bg-gray-200 text-gray-500 p-2 lg:p-1 w-12 h-12 lg:w-7 lg:h-7 flex justify-center items-center "
+				>
+					<svg
+						fill="#000000"
+						version="1.1"
+						id="Layer_1"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						viewBox="0 0 407.436 407.436"
+						xml:space="preserve"
+					>
+						<polygon points="112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 "></polygon>
+					</svg>
+				</div>
+			</div>
+		}
+	</div>
 }
 
 templ pages(urlPrefix string, count, page int) {
-for i := range count {
-<div hx-target="#registry-items" hx-swap="outerHTML" hx-get={ fmt.Sprintf("%s/%d", urlPrefix, i+1) }
-  class={ "flex items-center justify-center p-2 w-12 h-12 " + addActive(i+1, page) }>
-  <h2 class="text-3xl">{ fmt.Sprintf("%d",i+1) }</h2>
-</div>
-}
+	for i := range count {
+		<div
+			hx-target="#registry-items"
+			hx-swap="outerHTML"
+			hx-get={ fmt.Sprintf("%s/%d", urlPrefix, i+1) }
+			class={ "flex items-center justify-center p-2 lg:p-1 w-12 h-12 lg:w-8 lg:h-8 " + addActive(i+1, page) }
+		>
+			<h2 class="text-3xl lg:text-sm">{ fmt.Sprintf("%d",i+1) }</h2>
+		</div>
+	}
 }
 
 func addActive(current, page int) string {
-if current == page {
-return "bg-primary text-white"
-}
-return "bg-gray-200 text-gray-500"
+	if current == page {
+		return "bg-primary text-white"
+	}
+	return "bg-gray-200 text-gray-500"
 }

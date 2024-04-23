@@ -46,6 +46,7 @@ func Start(app *app.App) {
 	r.Post("/registry/search", registryHandlers.SearchAll)
 	r.Post("/registry/search/not-purchased", registryHandlers.SearchNotPurchased)
 	r.Get("/registry/all", registryHandlers.FilterAll)
+	r.Get("/maps", registryHandlers.GetMapScript)
 	r.Get("/registry/all/page/{page}", registryHandlers.GetRegistryPageFilteredAll)
 	r.Get("/registry/not-purchased/page/{page}", registryHandlers.GetRegistryPageFilteredNotPurchased)
 	r.Get("/registry/not-purchased", registryHandlers.FilterNotPurchased)

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
 	"strconv"
 
 	"github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/sections"
@@ -116,6 +118,20 @@ func (h *GetRegistryHandler) SearchAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	sections.RegistryItemGrid(items, pages, 1, "/registry/all/page").Render(r.Context(), w)
+}
+
+func (h *GetRegistryHandler) GetMapScript(w http.ResponseWriter, r *http.Request) {
+	command := exec.CommandContext(r.Context(), "curl", "-s", fmt.Sprintf("https://maps.googleapis.com/maps/api/js?key=%s&callback=console.debug&libraries=maps,marker&v=beta",
+		os.Getenv("maps_api_key")))
+	res, err := command.CombinedOutput()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	_, err = w.Write(res)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (h *GetRegistryHandler) SearchNotPurchased(w http.ResponseWriter, r *http.Request) {
