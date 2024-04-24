@@ -4,39 +4,40 @@ import "github.com/Delta-a-Sierra/wedding_website/internal/domain/entities"
 import "github.com/Delta-a-Sierra/wedding_website/internal/adapters/presentation/htmx/templates/components"
 
 templ Hero(countdown entities.Countdown) {
-	<main
-		id="hero"
-		class="flex flex-col h-full lg:h-200 items-center justify-start lg:justify-end pb-28 bg-cover bg-no-repeat bg-slate-700 lg:bg-slate-900 bg-blend-overlay bg-[url('/static/images/DSC9045_edited.png')] lg:bg-[url('/static/images/DSC9089_edited_desktop.png')]"
-	>
-		<div class="flex flex-col items-center gap-y-24 text-white pt-80 h-full">
-			<div class="flex flex-col gap-y-12 lg:gap-y-4 w-fit items-center flex-1">
-				<div class="flex gap-4 items-center">
-					<h1 class="font-italiana text-8xl lg:text-6xl">Damilola</h1>
-					<div class="h-12 w-12 lg:h-8 lg:w-8">
-						<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path
-								d="M25 12.2521C27.0437 9.85209 30.175 8.33334 33.4375 8.33334C39.2125 8.33334 43.75 12.8708 43.75 18.6458C43.75 25.7275 37.3854 31.499 27.7425 40.2431L27.7187 40.2646L25 42.7396L22.2812 40.2833L22.2073 40.216C12.5924 31.4788 6.25 25.7152 6.25 18.6458C6.25 12.8708 10.7875 8.33334 16.5625 8.33334C19.825 8.33334 22.9562 9.85209 25 12.2521Z"
-								fill="white"
-							></path>
-						</svg>
-					</div>
-					<h1 class="font-italiana text-8xl lg:text-6xl">Dwayne</h1>
-				</div>
-				<p class="text-5xl w-4/5 lg:text-3xl lg:w-3/5 text-center font-light text-gray-200 leading-relaxed">
-					Are getting married, join us to celebrate our union
-				</p>
-				<a href="#where-when" class="scroll-smooth bg-primary py-6 px-12 lg:py-1 lg:px-4 rounded-sm text-4xl lg:text-xl">
-					RSVP
-				</a>
-			</div>
-			@countdownSection(countdown)
-		</div>
-	</main>
+<main id="hero"
+  class="flex flex-col h-full lg:h-200 items-center justify-start lg:justify-end pb-28  bg-slate-700 lg:bg-slate-900 bg-opacity-5 relative">
+  <picture class="w-full h-full -z-10 lg:z-0 object-cover absolute top-0">
+    <source type="image/webp" media="(min-width:1024px)" srcset="/static/images/DSC9089_edited_desktop.webP" />
+    <img loading="eager" class="w-full h-full" src="/static/images/DSC9045_edited.webP" alt="picture of the couple" />
+  </picture>
+  <div class="flex flex-col items-center gap-y-24 text-white pt-80 h-full lg:z-10">
+    <div class="flex flex-col gap-y-12 lg:gap-y-4 w-fit items-center flex-1">
+      <div class="flex gap-4 items-center">
+        <h1 class="font-italiana text-8xl lg:text-6xl">Damilola</h1>
+        <div class="h-12 w-12 lg:h-8 lg:w-8">
+          <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M25 12.2521C27.0437 9.85209 30.175 8.33334 33.4375 8.33334C39.2125 8.33334 43.75 12.8708 43.75 18.6458C43.75 25.7275 37.3854 31.499 27.7425 40.2431L27.7187 40.2646L25 42.7396L22.2812 40.2833L22.2073 40.216C12.5924 31.4788 6.25 25.7152 6.25 18.6458C6.25 12.8708 10.7875 8.33334 16.5625 8.33334C19.825 8.33334 22.9562 9.85209 25 12.2521Z"
+              fill="white"></path>
+          </svg>
+        </div>
+        <h1 class="font-italiana text-8xl lg:text-6xl">Dwayne</h1>
+      </div>
+      <p class="text-5xl w-4/5 lg:text-3xl lg:w-3/5 text-center font-light text-gray-200 leading-relaxed">
+        Are getting married, join us to celebrate our union
+      </p>
+      <a href="#where-when" class="scroll-smooth bg-primary py-6 px-12 lg:py-1 lg:px-4 rounded-sm text-4xl lg:text-xl">
+        RSVP
+      </a>
+    </div>
+    @countdownSection(countdown)
+  </div>
+</main>
 }
 
 templ countdownSection(countdown entities.Countdown) {
-	<div class="flex flex-col justify-center gap-y-8 lg:gap-y-4 items-center text-white">
-		<h2 class="font-italiana text-6xl lg:text-4xl text-center tracking-widest">Forever Begins In</h2>
-		@components.Countdown(countdown)
-	</div>
+<div class="flex flex-col justify-center gap-y-8 lg:gap-y-4 items-center text-white">
+  <h2 class="font-italiana text-6xl lg:text-4xl text-center tracking-widest">Forever Begins In</h2>
+  @components.Countdown(countdown)
+</div>
 }

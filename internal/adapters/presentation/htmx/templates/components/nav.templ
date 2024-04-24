@@ -1,45 +1,41 @@
 package components
 
 templ Nav() {
-	<header class="flex flex-col items-center bg-white w-full lg:py-3 relative">
-		<nav class="flex w-full h-full py-10 px-10 border-white lg:py-0 items-center justify-between">
-			<div class="w-20 h-20 lg:w-10 lg:h-10">
-				@Logo()
-			</div>
-			<h5 class="px-4 font-italiana justify-self-end text-4xl lg:text-xl lg:flex-1">Damilola & Dwayne</h5>
-			<div class="w-16 h-16 flex lg:hidden" _="on click toggle between .hidden and .block on #nav-aside">
-				@icons("menu")
-			</div>
-			<ul class="hidden lg:flex gap-2 ml-auto text-sm">
-				@navLink("Home", "#hero")
-				@navLink("Wedding", "#where-when")
-				@navLink("Registry", "#registry")
-				@navLink("RSVP", "#where-when")
-			</ul>
-		</nav>
-		<div id="nav-aside" class="w-full hidden">
-			@navAside()
-		</div>
-	</header>
+<header class="flex flex-col items-center bg-white w-full lg:py-3 relative">
+  <nav class="flex w-full h-full py-10 px-10 border-white lg:py-0 items-center justify-between">
+    <div class="w-20 h-20 lg:w-10 lg:h-10">
+      @Logo()
+    </div>
+    <h5 class="px-4 font-italiana justify-self-end text-4xl lg:text-xl lg:flex-1">Damilola & Dwayne</h5>
+    <div class="w-16 h-16 flex lg:hidden" _="on click toggle between .hidden and .block on #nav-aside">
+      @icons("menu")
+    </div>
+    <ul class="hidden lg:flex gap-2 ml-auto text-sm">
+      @navLink("Home", "#hero")
+      @navLink("Wedding", "#where-when")
+      @navLink("Registry", "#registry")
+      @navLink("RSVP", "#where-when")
+    </ul>
+  </nav>
+  <div id="nav-aside" class="w-full hidden">
+    @navAside()
+  </div>
+</header>
 }
 
 templ navLink(text string, link templ.SafeURL) {
-	<li
-		class="hover:text-primary w-full lg:w-fit text-center py-2"
-		_="on click toggle between .hidden and .block on #nav-aside"
-	><a href={ link }>{ text }</a> </li>
+<li class="hover:text-primary w-full lg:w-fit text-center py-2"
+  _="on click toggle between .hidden and .block on #nav-aside"><a class="w-full" href={ link }>{ text }</a> </li>
 }
 
 templ navAside() {
-	<div>
-		<ul
-			class="flex flex-col items-center top-full py-8 border-white font-light z-10 lg:hidden gap-16 ml-auto bg-white
-  text-4xl absolute w-full"
-		>
-			@navLink("Home", "#hero")
-			@navLink("Wedding", "#where-when")
-			@navLink("Registry", "#registry")
-			@navLink("RSVP", "#where-when")
-		</ul>
-	</div>
+<div>
+  <ul class="flex flex-col items-center top-full py-8 border-white font-light z-50 lg:hidden gap-16 ml-auto bg-white
+  text-4xl absolute w-full">
+    @navLink("Home", "#hero")
+    @navLink("Wedding", "#where-when")
+    @navLink("Registry", "#registry")
+    @navLink("RSVP", "#where-when")
+  </ul>
+</div>
 }
